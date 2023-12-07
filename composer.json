@@ -1,0 +1,24 @@
+{
+    "name": "sectheater/php-mvc",
+    "autoload": {
+        "psr-4": {
+            "Sectheater\\PhpMvc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mokhtarmramadan",
+            "email": "mokhtarramdanformal@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6",
+        "symfony/var-dumper": "^6.4"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\": "App",
+            "Sectheater": "src"
+        }
+    }
+}

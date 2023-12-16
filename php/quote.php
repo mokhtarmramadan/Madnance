@@ -56,7 +56,7 @@
 
 <?php
     include("connect.php");
-
+    $symbol = "";
     // Check if the form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "post") 
         // Get the search term from the form

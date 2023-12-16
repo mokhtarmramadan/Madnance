@@ -58,7 +58,7 @@
     include("connect.php");
     $symbol = "";
     // Check if the form is submitted
-    if ($_SERVER["REQUEST_METHOD"] == "post") 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") 
         // Get the search term from the form
         if(isset($_POST["symbol"])) {
         
@@ -69,7 +69,7 @@
             die("Connection failed: " . $connect->connect_error);
         }
 
-        $sql = "SELECT symbol, company , price FROM stocks WHERE symbol LIKE '%$symbol%'";
+        $sql = "SELECT symbol, company, price FROM stocks WHERE symbol = '$symbol'";
         $result = $connect->query($sql);
 
     
@@ -82,7 +82,7 @@
             }
             echo "</ul>";
         } else {
-            echo "<p>No results found for '$productName'.</p>";
+            echo "<p>No results found for '$symbol'.</p>";
         }
 
         // Close the database connection

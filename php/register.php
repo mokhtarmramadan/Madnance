@@ -1,5 +1,6 @@
 <?php
 include("connect.php");
+session_start();
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get form data
@@ -19,22 +20,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
  
     // Username and passowrd validation
     if(!$username) {
-      echo "Missing Username";
+      echo '<div class="alert alert-danger" role="alert">Missing Username</div>';
     }
     else if ($result->num_rows > 0) {
-      echo "Username already exists. Please choose a different one.";
+      echo '<div class="alert alert-danger" role="alert">Username already exists. Please choose a different one.</div>';
     }
     else if(!$password) {
-      echo "Missing Password";
+      echo '<div class="alert alert-danger" role="alert">Missing Password</div>';
     }
     else if(!$confirmPassword) {
-      echo "confirm your password";
+      echo '<div class="alert alert-danger" role="alert">confirm your password</div>';
     }
     else if($password != $confirmPassword) {
-      echo "Your password doesn't match the confirmation";
+      echo '<div class="alert alert-danger" role="alert">Your password doesn\'t match the confirmation</div>';
     }
     else if(strlen($password) < 8) {
-      echo "Password should be at least 8 characters";
+      echo '<div class="alert alert-danger" role="alert">Password should be at least 8 characters</div>';
     }
     else {
       // Hash the password
@@ -43,7 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $insertQuery = "INSERT INTO users (username, hash_password) VALUES ('$username', '$hashedPassword')";
 
       if ($connect->query($insertQuery) === TRUE) {
-          echo "Registration successful!";
+        $_SESSION['registration_success'] = true;
+        // Redirect to main.php
+        header("Location: main.php");
+        exit(); // Make sure to exit after sending the header
       } else {
           echo "Error: " . $insertQuery . "<br>" . $connect->error;
       }
@@ -80,13 +84,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <nav class="bg-light border navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span class="green">$</span><span class="brown">M</span><span class="brown">A</span><span class="brown">D</span><span class="green">nance</span></a>
+                <a class="navbar-brand" href="../index.html"><span class="green">$</span><span class="brown">M</span><span class="brown">A</span><span class="brown">D</span><span class="green">nance</span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav ms-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
                         <li class="nav-item"><a class="nav-link" href="login.php">Log In</a></li>
                     </ul>
                 </div>

@@ -23,22 +23,41 @@
     <body id="index_body">
         <nav class="bg-light border navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span class="green">$</span><span class="brown">M</span><span class="brown">A</span><span class="brown">D</span><span class="green">nance</span></a>
+                <a class="navbar-brand" href="main.php"><span style="color: green;">$</span><span style="color: brown;">M</span><span style="color: brown;">A</span><span style="color: brown;">D</span><span style="color: green;">nance</span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
+                    <ul class="navbar-nav me-auto mt-2">
+                        <li class="nav-item"><a class="nav-link" href="quote.php">Quote</a></li>
+                        <li class="nav-item"><a class="nav-link" href="buy.php">Buy</a></li>
+                        <li class="nav-item"><a class="nav-link" href="sell.php">Sell</a></li>
+                        <li class="nav-item"><a class="nav-link" href="history.php">History</a></li>
+                    </ul>
                     <ul class="navbar-nav ms-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="php/register.php">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="php/login.php">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../index.html">Log out</a></li>
                     </ul>
                 </div>
             </div>
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-            
+            <h1>Sell</h1>
+            <form action="/sell" method="post">
+                <div class="mb-3">
+                    <select name="symbol">
+                        <?php
+                            // Using php and sql load all the stocks that the user has
+                        ?>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares" placeholder="Shares" type="number">
+                </div>
 
+                <button class="btn btn-primary" type="submit">Sell</button>
+            </form>
+        </main>   
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>
         </footer>

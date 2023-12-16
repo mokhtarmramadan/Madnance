@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("connect.php"); // Include your database connection file
 
 // Check if the form is submitted
@@ -23,14 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sign'])) {
 
         if (password_verify($password, $hashedPassword)) {
             // Password is correct, user is authenticated
-            echo "Login successful!";
+            $_SESSION['login_session'] = true;
+            header("Location: main.php");
+            exit();
         } else {
             // Password is incorrect
-            echo "Incorrect password. Please try again.";
+            echo '
+            <div class="alert alert-danger" role="alert">
+            Incorrect password. Please try again.</div>';
         }
     } else {
         // Username doesn't exist
-        echo "Username not found. Please check your username and try again.";
+        echo '<div class="alert alert-danger" role="alert">Username not found. Please check your username and try again.</div>';
     }
 
     // Close the database connection
@@ -66,14 +71,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sign'])) {
 
         <nav class="bg-light border navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/"><span class="green">$</span><span class="brown">M</span><span class="brown">A</span><span class="brown">D</span><span class="green">nance</span></a>
+                <a class="navbar-brand" href="../index.html"><span class="green">$</span><span class="brown">M</span><span class="brown">A</span><span class="brown">D</span><span class="green">nance</span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav ms-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="register.php">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="login.php">Log In</a></li>
                     </ul>
                 </div>
             </div>

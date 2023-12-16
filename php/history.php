@@ -12,11 +12,11 @@
         <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
 
         <!-- https://favicon.io/emoji-favicons/money-bag/ -->
-        <link href="static/favicon.ico" rel="icon">
+        <link href="/static/favicon.ico" rel="icon">
 
         <link href="static/style.css" rel="stylesheet">
 
-        <title>Madnance: Quote</title>
+        <title>Madnance: History</title>
 
     </head>
 
@@ -29,10 +29,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav me-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="quote.php">Quote</a></li>
-                        <li class="nav-item"><a class="nav-link" href="buy.php">Buy</a></li>
-                        <li class="nav-item"><a class="nav-link" href="sell.php">Sell</a></li>
-                        <li class="nav-item"><a class="nav-link" href="history.php">History</a></li>
+                                <li class="nav-item"><a class="nav-link" href="quote.php">Quote</a></li>
+                                <li class="nav-item"><a class="nav-link" href="buy.php">Buy</a></li>
+                                <li class="nav-item"><a class="nav-link" href="sell.php">Sell</a></li>
+                                <li class="nav-item"><a class="nav-link" href="history.php">History</a></li>
                     </ul>
                     <ul class="navbar-nav ms-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="../index.html">Log out</a></li>
@@ -42,15 +42,27 @@
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-            <h1>Quote</h1>
-            <form action="quote.php" method="post">
-                <div class="mb-3">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Symbol" type="text">
-                </div>
-                <button class="btn btn-primary" type="submit">Quote</button>
-            </form>
+            <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Symbols</th>
+                    <th scope="col">Shares</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- {% for row in transactions %}
+                    <tr>
+                        <td>{{ row["symbol"] }}</td>
+                        <td>{{ row["shares"] }}</td>
+                        <td>{{ row["price"] }}</td>
+                        <td>{{ row["date"] }}</td>
+                    </tr>
+                {% endfor %} -->
+            </tbody>
+            </table>
         </main>
-
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>
         </footer>
@@ -58,45 +70,3 @@
     </body>
 
 </html>
-
-
-<?php
-    include("connect.php");
-    // Check if the form is submitted
-    $symbol='You empty entry';
-    if ($_SERVER["REQUEST_METHOD"] == "POST") 
-        // Get the search term from the form
-        if(isset($_POST["symbol"]) || strlen($_POST["symbol"]) > 0) {
-        
-            $symbol = $_POST["symbol"];
-        }   
-
-     if ($connect->connect_error) {
-            die("Connection failed: " . $connect->connect_error);
-        }
-
-    $sql = "SELECT symbol, company, price FROM stocks WHERE symbol = '$symbol'";
-    $result = $connect->query($sql);
-
-    
-    // Display the results
-    if ($result->num_rows > 0) {
-        echo "<div style='text-align: center;'>";
-        echo "<h2>Search Results:</h2>";
-        echo "<ul>";
-        while ($row = $result->fetch_assoc()) {
-            echo "<li>{$row['symbol']} - Price: \${$row['price']}</li>";
-        }
-        echo "</ul>";
-        echo "</div>";
-    } else {
-        echo "<div style='text-align: center;'>";
-        echo "<p>No results found for '$symbol'.</p>";
-        echo "</div>";
-    }
-
-    // Close the database connection
-    $connect->close();
-    
-?>
-

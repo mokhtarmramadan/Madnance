@@ -37,7 +37,13 @@
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-            
+        <h1>Product Search</h1>
+           <form method="post" action="quote.php">
+                <label for="symbol">symbol Name:</label>
+                <input type="text" id="symbol" name="symbol" required>
+                <button type="submit">Search</button>
+          </form>
+        </main>
 
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>
@@ -46,3 +52,41 @@
     </body>
 
 </html>
+
+
+<?php
+    include("connect.php");
+
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "post") 
+        // Get the search term from the form
+        if(isset($_POST["symbol"])) {
+        
+            $symbol = $_POST["symbol"];
+        }   
+
+     if ($connect->connect_error) {
+            die("Connection failed: " . $connect->connect_error);
+        }
+
+        $sql = "SELECT symbol, company , price FROM stocks WHERE symbol LIKE '%$symbol%'";
+        $result = $connect->query($sql);
+
+    
+        // Display the results
+        if ($result->num_rows > 0) {
+            echo "<h2>Search Results:</h2>";
+            echo "<ul>";
+            while ($row = $result->fetch_assoc()) {
+                echo "<li>{$row['symbol']} - Price: {$row['price']}</li>";
+            }
+            echo "</ul>";
+        } else {
+            echo "<p>No results found for '$productName'.</p>";
+        }
+
+        // Close the database connection
+        $connect->close();
+    
+    ?>
+

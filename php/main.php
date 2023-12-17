@@ -67,50 +67,51 @@ else if(isset($_SESSION['sell_success']) && $_SESSION['sell_success']) {
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Symbols</th>
-                    <th scope="col">Shares</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">TOTAL</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                include("connect.php");
+            <div class="container">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Symbols</th>
+                            <th scope="col">Shares</th>
+                            <th scope="col">Share price</th>
+                            <th scope="col">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        include("connect.php");
 
-                $userId = $_SESSION['user_id'];
+                        $userId = $_SESSION['user_id'];
 
-                // Fetch user's transaction history
-                $fetchTransactionsQuery = "SELECT * FROM transactions WHERE user_id = '$userId'";
-                $fetchTransactionsResult = $connect->query($fetchTransactionsQuery);
+                        // Fetch user's transaction history
+                        $fetchTransactionsQuery = "SELECT * FROM transactions WHERE user_id = '$userId'";
+                        $fetchTransactionsResult = $connect->query($fetchTransactionsQuery);
 
-                $totalCash = 0; // Initialize total cash
+                        $totalCash = 0; // Initialize total cash
 
-                // Loop through results and display in the table
-                while ($row = $fetchTransactionsResult->fetch_assoc()) {
-                    echo '<tr>';
-                    echo '<td>' . $row['symbol'] . '</td>';
-                    echo '<td>' . $row['shares'] . '</td>';
-                    echo '<td>' . $row['price'] . '</td>';
-                    echo '<td>' . number_format($row['shares'] * $row['price'], 2) . '</td>';
-                    echo '</tr>';
+                        // Loop through results and display in the table
+                        while ($row = $fetchTransactionsResult->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>' . $row['symbol'] . '</td>';
+                            echo '<td>' . $row['shares'] . '</td>';
+                            echo '<td>' . $row['price'] . '</td>';
+                            echo '<td>' . '$' . number_format($row['shares'] * $row['price'], 2) . '</td>';
+                            echo '</tr>';
 
-                    $totalCash += ($row['shares'] * $row['price']); // Update total cash
-                }
-                ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <th scope="1">Total Amount</th>
-                    <th scope="1"><?php echo '$' . number_format($totalCash, 2); ?></th>
-                </tr>
-            </tfoot>
-        </table>
-    </main>
+                            $totalCash += ($row['shares'] * $row['price']); // Update total cash
+                        }
+                        ?>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <th scope="1">Total Amount</th>
+                            <th scope="1"><?php echo '$' . number_format($totalCash, 2); ?></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </main>
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>

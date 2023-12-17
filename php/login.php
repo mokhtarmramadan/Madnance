@@ -88,26 +88,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sign'])) {
         </nav>
 
         <main class="container py-5 text-center">
-          <form name="form" method="POST" action="login.php">
-            <div class="row mb-3">
-              <!-- Username input feild -->
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
-              <div class="col-sm-10">
-                <input type="text" name="username" class="form-control" id="inputEmail3">
-              </div>
-            </div>
+            <div class="container">
+                <h1 class="mb-4">Login now!</h1>
+                <form name="form" method="POST" action="login.php">
+                    <div class="row mb-3">
+                        <!-- Username input field -->
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="username" class="form-control" id="inputEmail3">
+                        </div>
+                    </div>
 
-            <div class="row mb-3">
-              <!-- Password input feild  -->
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-              <div class="col-sm-10">
-                <input type="password" name="password" class="form-control" id="inputPassword3">
-              </div>
+                    <div class="row mb-3">
+                        <!-- Password input field -->
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" name="password" class="form-control" id="inputPassword3">
+                        </div>
+                    </div>
+
+                    <!-- Sign in Button -->
+                    <button type="submit" name="sign" style="background-color: yellow; color: black; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 10px;">Sign In</button>
+                </form>
             </div>
-  
-            <!-- Sign in Button  -->
-            <button type="submit" name="sign" class="btn btn-primary">Sign In</button>
-            </form>
         </main>
 
         <footer class="mb-5 small text-center text-muted">

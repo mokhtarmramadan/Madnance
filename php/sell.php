@@ -119,28 +119,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-            <h1>Sell</h1>
-            <form action="sell.php" method="post">
-                <div class="mb-3">
-                    <select name="symbol">
-                    <?php
-                        $userId = $_SESSION['user_id'];
-                        $fetchStocksQuery = "SELECT DISTINCT symbol FROM transactions WHERE user_id = '$userId' AND shares > 0";
-                        $fetchStocksResult = $connect->query($fetchStocksQuery);
+            <div class="container">
+                <h1 class="mb-4">Sell</h1>
+                <form action="sell.php" method="post" class="d-flex flex-column align-items-center">
+                    <div class="mb-3">
+                        <select name="symbol" class="form-select">
+                            <?php
+                            $userId = $_SESSION['user_id'];
+                            $fetchStocksQuery = "SELECT DISTINCT symbol FROM transactions WHERE user_id = '$userId' AND shares > 0";
+                            $fetchStocksResult = $connect->query($fetchStocksQuery);
 
-                        while ($row = $fetchStocksResult->fetch_assoc()) {
-                            echo '<option value="' . $row['symbol'] . '">' . $row['symbol'] . '</option>';
-                        }
-                    ?>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares" placeholder="Shares" type="number" min="1">
-                </div>
-
-                <button class="btn btn-primary" type="submit">Sell</button>
-            </form>
-        </main>   
+                            while ($row = $fetchStocksResult->fetch_assoc()) {
+                                echo '<option value="' . $row['symbol'] . '">' . $row['symbol'] . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="Enter Shares"
+                            type="number" min="1">
+                    </div>
+                    <button style="background-color: #67B267; color: black; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 10px;" type="submit">Sell</button>
+                </form>
+            </div>
+        </main>
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>
         </footer>

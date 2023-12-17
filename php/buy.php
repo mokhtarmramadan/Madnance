@@ -121,17 +121,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-            <h1>Buy</h1>
-            <form action="buy.php" method="post">
-                <div class="mb-3">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Symbol" type="text">
-                </div>
-                <div class="mb-3">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="shares" placeholder="Shares" type="number" min="1">
-                </div>
-
-                <button class="btn btn-primary" type="submit">Buy</button>
+            <div class="container">
+                <h1 class="mb-4">Buy</h1>
+                <form action="buy.php" method="post" class="d-flex flex-column align-items-center">
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Enter Symbol"
+                            type="text">
+                    </div>
+                    <div class="mb-3">
+                        <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="Enter Shares"
+                            type="number" min="1">
+                    </div>
+                    <button style="background-color: #67B267; color: black; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 10px;" type="submit">Buy</button>
             </form>
+            </div>
         </main>
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>

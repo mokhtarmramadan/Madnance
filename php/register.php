@@ -106,36 +106,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </nav>
 
         <main class="container mt-5">
-          <form name="form" method="POST" action="register.php">
-            <div class="row mb-3">
-              <!-- Username input feild -->
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
-              <div class="col-sm-10">
-                <input type="text" name="username" class="form-control" id="inputEmail3">
-              </div>
-            </div>
+            <div class="container">
+                <h1 class="mb-4">Register now for a free trail!</h1>
+                <form name="form" method="POST" action="register.php">
+                    <div class="row mb-3">
+                        <!-- Username input field -->
+                        <label for="inputEmail3" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="username" class="form-control" id="inputEmail3">
+                        </div>
+                    </div>
 
-            <div class="row mb-3">
-              <!-- Password input feild  -->
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
-              <div class="col-sm-10">
-                <input type="password" name="password" class="form-control" id="inputPassword3">
-              </div>
-            </div>
+                    <div class="row mb-3">
+                        <!-- Password input field -->
+                        <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" name="password" class="form-control" id="inputPassword3">
+                        </div>
+                    </div>
 
-            <div class="row mb-3">
-              <!-- Confirm Password input feild  -->
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Confirm Password</label>
-              <div class="col-sm-10">
-                <input type="password" name="confirm" class="form-control" id="inputPassword3">
-              </div>
+                    <div class="row mb-3">
+                        <!-- Confirm Password input field -->
+                        <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" name="confirm" class="form-control" id="confirmPassword">
+                        </div>
+                    </div>
+
+                    <!-- Register Button -->
+                    <button type="submit" name="Register" style="background-color: yellow; color: black; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 10px;">Register</button>
+                </form>
             </div>
-  
-            <!-- Register Button  -->
-            <button type="submit" name="Register" class="btn btn-primary">Register</button>
-            </form>
         </main>
-
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>
         </footer>

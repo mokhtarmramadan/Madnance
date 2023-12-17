@@ -42,18 +42,18 @@
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-            <h1>Quote</h1>
-            <form action="quote.php" method="post">
-                <div class="mb-3">
-                    <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="symbol" placeholder="Symbol" type="text">
-                </div>
-                <button class="btn btn-primary" type="submit">Quote</button>
-            </form>
+            <div class="container">
+                <h1 class="mb-4">Quote</h1>
+                <form action="quote.php" method="post" class="d-flex justify-content-center align-items-center">
+                    <div class="input-group">
+                        <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Enter Symbol"
+                            type="text">
+                        <button style="background-color: #67B267; color: black; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 10px;" type="submit">Get Quote</button>
+                    </div>
+                </form>
+            </div>
         </main>
 
-        <footer class="mb-5 small text-center text-muted">
-            Data provided by <a href="https://iexcloud.io/">IEX</a>
-        </footer>
 
     </body>
 

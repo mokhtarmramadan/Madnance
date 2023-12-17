@@ -42,40 +42,42 @@
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Symbols</th>
-                        <th scope="col">Shares</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    session_start();
-                    include("connect.php");
+            <div class="container">
+                <h1 class="mb-4">History</h1>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Symbols</th>
+                            <th scope="col">Shares</th>
+                            <th scope="col">Share price</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        session_start();
+                        include("connect.php");
 
-                    // Get user ID from session
-                    $userId = $_SESSION['user_id'];
+                        // Get user ID from session
+                        $userId = $_SESSION['user_id'];
 
-                    // Fetch transaction history for the user
-                    $fetchHistoryQuery = "SELECT * FROM history WHERE user_id = '$userId'";
-                    $fetchHistoryResult = $connect->query($fetchHistoryQuery);
+                        // Fetch transaction history for the user
+                        $fetchHistoryQuery = "SELECT * FROM history WHERE user_id = '$userId'";
+                        $fetchHistoryResult = $connect->query($fetchHistoryQuery);
 
-                    // Loop through results and display in the table
-                    while ($row = $fetchHistoryResult->fetch_assoc()) {
-                        echo '<tr>';
-                        echo '<td>' . $row['symbol'] . '</td>';
-                        echo '<td>' . $row['shares'] . '</td>';
-                        echo '<td>' . $row['price'] . '</td>';
-                        echo '<td>' . $row['date'] . '</td>';
-                        echo '</tr>';
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </main>
+                        // Loop through results and display in the table
+                        while ($row = $fetchHistoryResult->fetch_assoc()) {
+                            echo '<tr>';
+                            echo '<td>' . $row['symbol'] . '</td>';
+                            echo '<td>' . $row['shares'] . '</td>';
+                            echo '<td>' . $row['price'] . '</td>';
+                            echo '<td>' . $row['date'] . '</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </main>
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>

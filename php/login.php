@@ -108,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sign'])) {
                     </div>
 
                     <!-- Sign in Button -->
-                    <button type="submit" name="sign" style="background-color: yellow; color: black; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 10px;">Sign In</button>
+                    <button type="submit" name="sign" style="background-color: yellow; color: black; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; cursor: pointer; border-radius: 10px;">Login</button>
                 </form>
             </div>
         </main>

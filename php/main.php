@@ -13,6 +13,14 @@ else if(isset($_SESSION['login_session']) && $_SESSION['login_session'] === true
     echo '<div class="alert alert-success" role="alert">Login successful!</div>';
     unset($_SESSION['login_session']);
 }
+else if(isset($_SESSION['buy_success']) && $_SESSION['buy_success'] === true) {
+    echo '<div class="alert alert-success" role="alert">Bought successfully!</div>';
+    unset($_SESSION['buy_success']);
+}
+else if(isset($_SESSION['sell_success']) && $_SESSION['sell_success']) {
+    echo '<div class="alert alert-success" role="alert">Sold successfully!</div>';
+    unset($_SESSION['sell_success']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,9 +37,9 @@ else if(isset($_SESSION['login_session']) && $_SESSION['login_session'] === true
         <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
 
         <!-- https://favicon.io/emoji-favicons/money-bag/ -->
-        <link href="/static/favicon.ico" rel="icon">
+        <link href="../static/favicon.ico" rel="icon">
 
-        <link href="static/style.css" rel="stylesheet">
+        <link href="../static/style.css" rel="stylesheet">
 
         <title>Madnance: Main Page</title>
 
@@ -40,7 +48,7 @@ else if(isset($_SESSION['login_session']) && $_SESSION['login_session'] === true
     <body id="index_body">
         <nav class="bg-light border navbar navbar-expand-md navbar-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="main.php"><span style="color: green;">$</span><span style="color: brown;">M</span><span style="color: brown;">A</span><span style="color: brown;">D</span><span style="color: green;">nance</span></a>
+                <a class="navbar-brand" href="main.php"><span style="color: green;">$</span><span style="color: black;">M</span><span style="color: black;">A</span><span style="color: black;">D</span><span style="color: green;">nance</span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -59,7 +67,7 @@ else if(isset($_SESSION['login_session']) && $_SESSION['login_session'] === true
         </nav>  
           
         <main class="container-fluid py-5 text-center">
-            <table class="table">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Symbols</th>
@@ -69,23 +77,40 @@ else if(isset($_SESSION['login_session']) && $_SESSION['login_session'] === true
                 </tr>
             </thead>
             <tbody>
-                <!-- {% for row in database %}
-                    <tr>
-                        <td>{{ row["symbol"] }}</td>
-                        <td>{{ row["shares"] }}</td>
-                        <td>{{ row["price"] }}</td>
-                    </tr>
-                {% endfor %} -->
+                <?php
+                include("connect.php");
+
+                $userId = $_SESSION['user_id'];
+
+                // Fetch user's transaction history
+                $fetchTransactionsQuery = "SELECT * FROM transactions WHERE user_id = '$userId'";
+                $fetchTransactionsResult = $connect->query($fetchTransactionsQuery);
+
+                $totalCash = 0; // Initialize total cash
+
+                // Loop through results and display in the table
+                while ($row = $fetchTransactionsResult->fetch_assoc()) {
+                    echo '<tr>';
+                    echo '<td>' . $row['symbol'] . '</td>';
+                    echo '<td>' . $row['shares'] . '</td>';
+                    echo '<td>' . $row['price'] . '</td>';
+                    echo '<td>' . number_format($row['shares'] * $row['price'], 2) . '</td>';
+                    echo '</tr>';
+
+                    $totalCash += ($row['shares'] * $row['price']); // Update total cash
+                }
+                ?>
             </tbody>
             <tfoot>
-                <!-- <tr>
+                <tr>
                     <td></td>
                     <td></td>
                     <th scope="1">Total Amount</th>
-                    <th scope="1">{{ cash }}</th>
-                </tr> -->
+                    <th scope="1"><?php echo '$' . number_format($totalCash, 2); ?></th>
+                </tr>
             </tfoot>
-            </table>
+        </table>
+    </main>
         </main>
         <footer class="mb-5 small text-center text-muted">
             Data provided by <a href="https://iexcloud.io/">IEX</a>

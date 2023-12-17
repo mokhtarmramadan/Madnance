@@ -1,6 +1,7 @@
 <?php
 include("connect.php");
 session_start();
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Get form data
@@ -17,45 +18,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $checkQuery = "SELECT * FROM users WHERE username = '$username'";
     $result = $connect->query($checkQuery);
 
- 
-    // Username and passowrd validation
-    if(!$username) {
-      echo '<div class="alert alert-danger" role="alert">Missing Username</div>';
-    }
-    else if ($result->num_rows > 0) {
-      echo '<div class="alert alert-danger" role="alert">Username already exists. Please choose a different one.</div>';
-    }
-    else if(!$password) {
-      echo '<div class="alert alert-danger" role="alert">Missing Password</div>';
-    }
-    else if(!$confirmPassword) {
-      echo '<div class="alert alert-danger" role="alert">confirm your password</div>';
-    }
-    else if($password != $confirmPassword) {
-      echo '<div class="alert alert-danger" role="alert">Your password doesn\'t match the confirmation</div>';
-    }
-    else if(strlen($password) < 8) {
-      echo '<div class="alert alert-danger" role="alert">Password should be at least 8 characters</div>';
-    }
-    else {
-      // Hash the password
-      $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-      // Insert new user into the database
-      $insertQuery = "INSERT INTO users (username, hash_password) VALUES ('$username', '$hashedPassword')";
+    // Username and password validation
+    if (!$username) {
+        echo '<div class="alert alert-danger" role="alert">Missing Username</div>';
+    } elseif ($result->num_rows > 0) {
+        echo '<div class="alert alert-danger" role="alert">Username already exists. Please choose a different one.</div>';
+    } elseif (!$password) {
+        echo '<div class="alert alert-danger" role="alert">Missing Password</div>';
+    } elseif (!$confirmPassword) {
+        echo '<div class="alert alert-danger" role="alert">Confirm your password</div>';
+    } elseif ($password != $confirmPassword) {
+        echo '<div class="alert alert-danger" role="alert">Your password doesn\'t match the confirmation</div>';
+    } elseif (strlen($password) < 8) {
+        echo '<div class="alert alert-danger" role="alert">Password should be at least 8 characters</div>';
+    } else {
+        // Hash the password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-      if ($connect->query($insertQuery) === TRUE) {
-        $_SESSION['registration_success'] = true;
-        // Redirect to main.php
-        header("Location: main.php");
-        exit(); // Make sure to exit after sending the header
-      } else {
-          echo "Error: " . $insertQuery . "<br>" . $connect->error;
-      }
+        // Insert new user into the database
+        $insertQuery = "INSERT INTO users (username, hash_password) VALUES ('$username', '$hashedPassword')";
+
+        if ($connect->query($insertQuery) === TRUE) {
+            // Get the user ID of the newly registered user
+            $userIdQuery = "SELECT id FROM users WHERE username = '$username'";
+            $userIdResult = $connect->query($userIdQuery);
+
+            if ($userIdResult->num_rows > 0) {
+                $row = $userIdResult->fetch_assoc();
+                $userId = $row['id'];
+
+                // Store user ID in the session
+                $_SESSION['registration_success'] = true;
+                $_SESSION['user_id'] = $userId;
+
+                // Redirect to main.php
+                header("Location: main.php");
+                exit();
+            } else {
+                echo '<div class="alert alert-danger" role="alert">Error retrieving user ID.</div>';
+            }
+        } else {
+            echo "Error: " . $insertQuery . "<br>" . $connect->error;
+        }
     }
 
-        // Close the database connection
-        $connect->close();
-  }
+    // Close the database connection
+    $connect->close();
+}
 ?>
 
 <!DOCTYPE html>

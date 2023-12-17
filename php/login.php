@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("connect.php"); // Include your database connection file
+include("connect.php");
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sign'])) {
@@ -18,13 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['sign'])) {
     $result = $connect->query($checkQuery);
 
     if ($result->num_rows == 1) {
-        // Username exists, now check the password
         $row = $result->fetch_assoc();
         $hashedPassword = $row['hash_password'];
 
         if (password_verify($password, $hashedPassword)) {
-            // Password is correct, user is authenticated
+            // Get the user ID
+            $userId = $row['id'];
+
+            // Store user ID in the session
             $_SESSION['login_session'] = true;
+            $_SESSION['user_id'] = $userId;
+
             header("Location: main.php");
             exit();
         } else {

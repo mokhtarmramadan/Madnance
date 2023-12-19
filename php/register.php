@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header("Location: main.php");
                 exit();
             } else {
-                echo '<div class="alert alert-danger" role="alert">Error retrieving user ID.</div>';
+                echo '<div class="alert alert-danger" role="alert">Couldn\'t find user ID.</div>';
             }
         } else {
             echo "Error: " . $insertQuery . "<br>" . $connect->error;

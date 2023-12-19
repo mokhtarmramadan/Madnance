@@ -70,7 +70,7 @@
                             echo '<tr>';
                             echo '<td>' . $row['symbol'] . '</td>';
                             echo '<td>' . $row['shares'] . '</td>';
-                            echo '<td>' . $row['price'] . '</td>';
+                            echo '<td><mark>' . '$' . number_format($row['price'], 2) . '</mark></td>';
                             echo '<td>' . $row['date'] . '</td>';
                             echo '</tr>';
                         }
@@ -79,8 +79,11 @@
                 </table>
             </div>
         </main>
-        <footer class="mb-5 small text-center text-muted">
-            Data provided by <a href="https://iexcloud.io/">IEX</a>
+        <footer class="mb-5 small text-center text-muted my_footer">
+            Created by <a style="text-decoration: none;" href="https://github.com/mokhtarmramadan">Mokhtar Ramadan</a>, 
+            <a style="text-decoration: none;" href="https://github.com/ahmedadel1020">Ahmed Adel</a>, 
+            <a style="text-decoration: none;" href="https://github.com/Eldemer">Ahmed El-Demerdash</a> and
+            <a style="text-decoration: none;" href="https://github.com/sherfo">Mostafa Ashraf</a>
         </footer>
 
     </body>

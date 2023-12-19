@@ -42,11 +42,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 if ($checkStockResult->num_rows > 0) {
                     // User already owns the stock, update the shares
-                    $updateSharesQuery = "UPDATE transactions SET shares = shares + $shares, price = price + $totalPrice WHERE user_id = '$userId' AND symbol = '$symbol'";
+                    $updateSharesQuery = "UPDATE transactions SET shares = shares + $shares WHERE user_id = '$userId' AND symbol = '$symbol'";
                     $connect->query($updateSharesQuery);
                 } else {
                     // User doesn't own the stock, insert a new entry
-                    $insertQuery = "INSERT INTO transactions (user_id, symbol, shares, price, date) VALUES ('$userId', '$symbol', $shares, $totalPrice, NOW())";
+                    $insertQuery = "INSERT INTO transactions (user_id, symbol, shares, price, date) VALUES ('$userId', '$symbol', $shares, $stockPrice, NOW())";
                     $connect->query($insertQuery);
                 }
 
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $connect->query($updateCashQuery);
 
                 // Insert data into the history table
-                $insertHistoryQuery = "INSERT INTO history (user_id, symbol, shares, price, date) VALUES ('$userId', '$symbol', $shares, $totalPrice, NOW())";
+                $insertHistoryQuery = "INSERT INTO history (user_id, symbol, shares, price, date) VALUES ('$userId', '$symbol', $shares, $stockPrice, NOW())";
                 $connect->query($insertHistoryQuery);
 
                 // Redirect to main.php with a success message
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exit();
             } else {
                 // User doesn't have enough cash to buy
-                echo '<div class="alert alert-danger" role="alert">Not enough cash to buy. Please deposit funds.</div>';
+                echo '<div class="alert alert-danger" role="alert">You\'ve exceeded the $10,000 free trial threshold, Please recharge and try again.</div>';
             }
         } else {
             // Error retrieving user's cash
@@ -136,8 +136,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </form>
             </div>
         </main>
-        <footer class="mb-5 small text-center text-muted">
-            Data provided by <a href="https://iexcloud.io/">IEX</a>
+        <footer class="mb-5 small text-center text-muted my_footer">
+            Created by <a style="text-decoration: none;" href="https://github.com/mokhtarmramadan">Mokhtar Ramadan</a>, 
+            <a style="text-decoration: none;" href="https://github.com/ahmedadel1020">Ahmed Adel</a>, 
+            <a style="text-decoration: none;" href="https://github.com/Eldemer">Ahmed El-Demerdash</a> and
+            <a style="text-decoration: none;" href="https://github.com/sherfo">Mostafa Ashraf</a>
         </footer>
 
     </body>

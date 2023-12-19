@@ -87,18 +87,25 @@ else if(isset($_SESSION['sell_success']) && $_SESSION['sell_success']) {
                         $fetchTransactionsQuery = "SELECT * FROM transactions WHERE user_id = '$userId'";
                         $fetchTransactionsResult = $connect->query($fetchTransactionsQuery);
 
+                        // Fetch user's cash amount
+                        $fetchCashQuery = "SELECT cash FROM users WHERE id = '$userId'";
+                        $fetchCashResult = $connect->query($fetchCashQuery);
+                        $userData = $fetchCashResult->fetch_assoc();
+                        $cash_left = $userData['cash'];
                         $totalCash = 0; // Initialize total cash
 
                         // Loop through results and display in the table
                         while ($row = $fetchTransactionsResult->fetch_assoc()) {
-                            echo '<tr>';
-                            echo '<td>' . $row['symbol'] . '</td>';
-                            echo '<td>' . $row['shares'] . '</td>';
-                            echo '<td>' . $row['price'] . '</td>';
-                            echo '<td>' . '$' . number_format($row['shares'] * $row['price'], 2) . '</td>';
-                            echo '</tr>';
+                            if($row['shares'] > 0) {
+                                echo '<tr>';
+                                echo '<td>' . $row['symbol'] . '</td>';
+                                echo '<td>' . $row['shares'] . '</td>';
+                                echo '<td>' . '$' . number_format($row['price'], 2) . '</td>';
+                                echo '<td>' . '$' . number_format($row['shares'] * $row['price'], 2) . '</td>';
+                                echo '</tr>';
 
-                            $totalCash += ($row['shares'] * $row['price']); // Update total cash
+                                $totalCash += ($row['shares'] * $row['price']); // Update total cash
+                            }
                         }
                         ?>
                     </tbody>
@@ -107,14 +114,23 @@ else if(isset($_SESSION['sell_success']) && $_SESSION['sell_success']) {
                             <td></td>
                             <td></td>
                             <th scope="1">Total Amount</th>
-                            <th scope="1"><?php echo '$' . number_format($totalCash, 2); ?></th>
+                            <th scope="1"><mark><?php echo '$' . number_format($totalCash, 2); ?></mark></th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <th scope="1">Cash Left</th>
+                            <th scope="1"> <mark><?php echo '$' . number_format($cash_left, 2); ?></mark></th>
                         </tr>
                     </tfoot>
                 </table>
             </div>
         </main>
-        <footer class="mb-5 small text-center text-muted">
-            Data provided by <a href="https://iexcloud.io/">IEX</a>
+        <footer class="mb-5 small text-center text-muted my_footer">
+            Created by <a style="text-decoration: none;" href="https://github.com/mokhtarmramadan">Mokhtar Ramadan</a>, 
+            <a style="text-decoration: none;" href="https://github.com/ahmedadel1020">Ahmed Adel</a>, 
+            <a style="text-decoration: none;" href="https://github.com/Eldemer">Ahmed El-Demerdash</a> and
+            <a style="text-decoration: none;" href="https://github.com/sherfo">Mostafa Ashraf</a>
         </footer>
 
     </body>

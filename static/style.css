@@ -36,3 +36,7 @@ nav .navbar-brand .green
     cursor: pointer;
     border-radius: 10px;
   }
+
+  .my_footer a {
+    text-decoration: none;
+  }

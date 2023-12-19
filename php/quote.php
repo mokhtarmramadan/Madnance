@@ -53,8 +53,6 @@
                 </form>
             </div>
         </main>
-
-
     </body>
 
 </html>
@@ -85,7 +83,7 @@
         echo "<h2>Search Results:</h2>";
         echo "<ul>";
         while ($row = $result->fetch_assoc()) {
-            echo "<li>{$row['symbol']} - Price: \${$row['price']}</li>";
+            echo "<li>{$row['symbol']} - Price: <mark>\$" . number_format($row['price'], 2) . "</mark></li>";
         }
         echo "</ul>";
         echo "</div>";
